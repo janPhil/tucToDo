@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.whoami.tuctodo.SettingsActivity">
+
+    <TextView
+        android:id="@+id/nameInsertLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nameInsert"/>
+
+    <EditText
+        android:id="@+id/nameInsertEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameInsertLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp"
+        android:layout_alignRight="@+id/mailInsertEditText"
+        android:layout_alignEnd="@+id/mailInsertEditText" />
+
+    <TextView
+        android:id="@+id/mailInsertLabel"
+        android:text="@string/mailInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameInsertEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/mailInsertEditText"
+        android:layout_below="@+id/mailInsertLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saveButton"
+        android:id="@+id/saveButton"
+        android:layout_below="@+id/mailInsertEditText"
+        android:layout_alignRight="@+id/nameInsertLabel"
+        android:layout_alignEnd="@+id/nameInsertLabel"
+        android:layout_marginTop="58dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editButton"
+        android:id="@+id/editButton"
+        android:layout_alignTop="@+id/saveButton"
+        android:layout_toRightOf="@+id/mailInsertEditText"
+        android:layout_toEndOf="@+id/mailInsertEditText" />
+
+
+</RelativeLayout>

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.whoami.tuctodo.db.TaskContract;
 import com.example.whoami.tuctodo.db.TaskDBHelper;
@@ -27,6 +29,7 @@ public class ToDoFragment extends Fragment {
     public String LOG_TAG = getClass().getSimpleName();
     private CustomAdapter mCustomAdapter;
     private TaskDBHelper dbHelper;
+    Cursor c;
 
     public ToDoFragment(){
     }
@@ -50,6 +53,9 @@ public class ToDoFragment extends Fragment {
         if (id == R.id.action_add_task){
             startActivity(new Intent(getActivity(),AddTask.class));
         }
+        if (id == R.id.action_settings){
+            startActivity(new Intent(getActivity(),SettingsActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -69,30 +75,68 @@ public class ToDoFragment extends Fragment {
 
         Log.d(LOG_TAG, " No.:" + c.getCount());
 
-        View rooView = inflater.inflate(R.layout.to_do_fragment, container,false);
+        View rooView = inflater.inflate(R.layout.to_do_fragment, container, false);
         ListView listView = (ListView) rooView.findViewById(R.id.fragment_listView);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                deleteToDo(view);
+                Toast.makeText(getActivity(), "To-Do wurde gelöscht", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "looong");
+                return false;
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final SimpleCursorAdapter simpleCursorAdapter = (SimpleCursorAdapter)parent.getAdapter();
+                Log.d(LOG_TAG, "short click");
+                final SimpleCursorAdapter simpleCursorAdapter = (SimpleCursorAdapter) parent.getAdapter();
                 final Cursor cursor = simpleCursorAdapter.getCursor();
                 final int idColIndex = cursor.getColumnIndex(TaskContract.Columns._ID);
                 final String rowId = cursor.getString(idColIndex);
                 Intent intent = new Intent(getActivity(), ToDoDetail.class);
-                intent.putExtra("EXTRA_NUM",rowId);
+                intent.putExtra("EXTRA_NUM", rowId);
                 startActivity(intent);
             }
         });
+
+
         listView.setAdapter(mCustomAdapter);
 
         return rooView;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
         Log.d(LOG_TAG, "onResume");
+        SQLiteDatabase sql = dbHelper.getReadableDatabase();
+        Cursor newCursor = sql.query(TaskContract.TABLE,
+                new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC,TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.DATE},
+                null, null, null, null, null);
+        mCustomAdapter.swapCursor(newCursor);
+        mCustomAdapter.notifyDataSetChanged();
+    }
+
+    public void deleteToDo(View view) {
+        View v = (View) view.getParent();
+        TextView taskTextView = (TextView) v.findViewById(R.id.taskTextView);
+        String task = taskTextView.getText().toString();
+        Log.d(LOG_TAG, "taskTextView: " + task);
+        String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
+                TaskContract.TABLE,
+                TaskContract.Columns.DESC,
+                task);
+        dbHelper = new TaskDBHelper(getActivity());
+        SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
+        sqlDB.execSQL(sql);
+        Log.d(LOG_TAG, "onDoneButtonCLick");
+        sqlDB.close();
+        updateUI();
+    }
+
+    public void updateUI(){
+        Log.d(LOG_TAG, "updateUI");
         SQLiteDatabase sql = dbHelper.getReadableDatabase();
         Cursor newCursor = sql.query(TaskContract.TABLE,
                 new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC,TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.DATE},
