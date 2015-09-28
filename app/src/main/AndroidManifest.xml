@@ -36,6 +36,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.whoami.tuctodo.MainActivity" />
         </activity>
+        <activity
+            android:name=".WorkReport"
+            android:label="@string/title_activity_work_report"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.whoami.tuctodo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

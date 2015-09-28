@@ -20,8 +20,6 @@ import com.example.whoami.tuctodo.db.TaskDBHelper;
 
 public class ToDoDetail extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +87,7 @@ public class ToDoDetail extends AppCompatActivity {
             SQLiteDatabase sql = dbHelper.getReadableDatabase();
             String[] args = new String[]{id};
             Cursor c = sql.query(TaskContract.TABLE,
-                    new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC, TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.DATE,
+                    new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC, TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.BEGINDATE,
                             TaskContract.Columns.PLACE}, TaskContract.Columns._ID + " =?", args, null, null, null);
 
             c.moveToFirst();
@@ -99,8 +97,6 @@ public class ToDoDetail extends AppCompatActivity {
             dateTextView.setText(c.getString(4));
             c.close();
             sql.close();
-
-
         }
 
     }

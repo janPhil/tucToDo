@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -23,6 +24,9 @@ import com.example.whoami.tuctodo.db.TaskDBHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by whoami on 06.09.15.
@@ -32,37 +36,52 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
 
     private String LOG_TAG = getClass().getSimpleName();
     private TaskDBHelper dbHelper;
-
     private String description;
     private String place;
     private String typeOfTask;
-    private String date;
-    private String startTime;
-    private String endTime;
-    private Integer duration;
     private boolean startButtonClicked = false;
     private boolean stopButtonClicked = false;
-    private Dialog dateDialog;
+    private boolean beginDateButtonClicked = false;
+    private boolean endDateButtonClicked = false;
     private Dialog startTimeDialog;
     private Dialog endTimeDialog;
     private EditText taskEditText;
     private EditText placeEditText;
-    Button dateButton;
-    Button addButton;
+    private Button beginDateButton;
+    private Button endDateButton;
+    private Button startTime;
+    private Button stopTime;
+    private Button addButton;
+    private Calendar beginDate;
+    private String beginDateString;
+    private Calendar endDate;
+    private String endDateString;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
 
-        dateButton = (Button) findViewById(R.id.task_date_button);
-        dateButton.setOnClickListener(new View.OnClickListener() {
+        beginDateButton = (Button) findViewById(R.id.beginDate);
+        beginDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dateDialog = onCreateCalendarDialog();
+                beginDateButtonClicked = true;
+                Dialog dateDialog = onCreateCalendarDialog();
                 dateDialog.show();
             }
         });
+
+        endDateButton = (Button) findViewById(R.id.endDate);
+        endDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endDateButtonClicked = true;
+                Dialog dateDialog = onCreateCalendarDialog();
+                dateDialog.show();
+            }
+        });
+
         addButton = (Button) findViewById(R.id.addTaskButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +90,7 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
                 description = taskEditText.getText().toString();
                 placeEditText = (EditText) findViewById(R.id.place_editText);
                 place = placeEditText.getText().toString();
-                addTaskToDatabase(description, place, typeOfTask, date);
+                addTaskToDatabase(description, place, typeOfTask, beginDateString, endDateString);
             }
         });
 
@@ -111,22 +130,20 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
             }
         });
 
-        Button startTime = (Button) findViewById(R.id.startTimeButton);
+        startTime = (Button) findViewById(R.id.startTimeButton);
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startButtonClicked = true;
-                stopButtonClicked = false;
                 startTimeDialog = onCreateTimeDialog();
                 startTimeDialog.show();
             }
         });
 
-        Button stopTime = (Button) findViewById(R.id.endTimeButton);
+        stopTime = (Button) findViewById(R.id.endTimeButton);
         stopTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startButtonClicked = false;
                 stopButtonClicked = true;
                 endTimeDialog = onCreateTimeDialog();
                 endTimeDialog.show();
@@ -134,7 +151,7 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
         });
     }
 
-    public void addTaskToDatabase(String desc, String pl, String ty, String da){
+    public void addTaskToDatabase(String desc, String pl, String ty, String beda, String enda){
         dbHelper = new TaskDBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -142,15 +159,14 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
         values.put(TaskContract.Columns.DESC, desc);
         values.put(TaskContract.Columns.PLACE, pl);
         values.put(TaskContract.Columns.TYPEOFTASK, ty);
-        values.put(TaskContract.Columns.DATE, da);
+        values.put(TaskContract.Columns.BEGINDATE, beda);
+        values.put(TaskContract.Columns.ENDDATE, enda);
         long newId;
         newId = db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         Log.d(LOG_TAG, "addTaskToDatabase " + values.valueSet() + " " + newId);
-        //Task task = new Task(description,date.toString(),null,place,typeOfTask);
         db.close();
+        Log.d(LOG_TAG, "Duration: " + getDuration(beginDate.getTime(), endDate.getTime(), TimeUnit.MINUTES));
     }
-
-
 
     public Dialog onCreateTimeDialog(){
         final Calendar cal = Calendar.getInstance();
@@ -163,15 +179,22 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (startButtonClicked) {
             Log.d(LOG_TAG, "starttime: " + hourOfDay + " " + minute);
+            beginDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            beginDate.set(Calendar.MINUTE, minute);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            beginDateString = format.format(beginDate.getTime());
+            Log.d(LOG_TAG, "BeginDate: " + beginDateString);
+            startTime.setText(hourOfDay + " " + minute);
             startButtonClicked = false;
-            startTime = String.valueOf(hourOfDay) + String.valueOf(minute);
         } else if (stopButtonClicked){
-
-            endTime = String.valueOf(hourOfDay) + String.valueOf(minute);
+            Log.d(LOG_TAG, "endtime: " + hourOfDay + " " + minute);
+            endDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            endDate.set(Calendar.MINUTE, minute);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            endDateString = format.format(endDate.getTime());
+            Log.d(LOG_TAG, "EndDate: " + endDateString);
             stopButtonClicked = false;
-            duration = Integer.parseInt(endTime)-Integer.parseInt(startTime);
-            Log.d(LOG_TAG, "stopttime: " + hourOfDay + " " + minute + " " + duration);
-
+            stopTime.setText(hourOfDay + " " + minute);
         }
     }
 
@@ -185,44 +208,52 @@ public class AddTask extends Activity implements DatePickerDialog.OnDateSetListe
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, monthOfYear, dayOfMonth);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d-MMM-yyyy");
-        String formated = simpleDateFormat.format(cal.getTime());
-        Log.d(LOG_TAG, "onDateSet: " + formated);
-        date = formated;
+
+        if (beginDateButtonClicked){
+            beginDate = Calendar.getInstance();
+            beginDate.set(year,monthOfYear,dayOfMonth);
+            beginDateString = formatDateToString(beginDate.getTime());
+            Log.d(LOG_TAG, "BeginDate: " + beginDateString);
+            beginDateButtonClicked = false;
+            beginDateButton.setText(dayOfMonth + " " + monthOfYear);
+        }
+        else if (endDateButtonClicked){
+            endDate = Calendar.getInstance();
+            endDate.set(year,monthOfYear,dayOfMonth);
+            endDateString = formatDateToString(endDate.getTime());
+            Log.d(LOG_TAG, "EndDate: " + endDateString);
+            endDateButtonClicked = false;
+            endDateButton.setText(dayOfMonth + " " + monthOfYear);
+        }
     }
 
-    private void insertEntry(/*String pTitle, String pDescription, String pLocation*/) {
+    private String formatDateToString(Date c){
+        String output;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        output = format.format(c.getTime());
+        return output;
+    }
 
-        /*ContentValues values = new ContentValues();
+    private void insertEntry() {
+
+        ContentValues values = new ContentValues();
         ContentResolver mContentResolver = getApplicationContext().getContentResolver();
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
-        values.put(CalendarContract.Events.TITLE, pTitle);
-        //values.put(CalendarContract.Events.DESCRIPTION, pDescription);
-        values.put(CalendarContract.Events.EVENT_LOCATION, pLocation);
-        //values.put(CalendarContract.Events.DTSTART, pStartTimestamp);
-        //values.put(CalendarContract.Events.DTEND, pEndTimestamp);
-        values.put(CalendarContract.Events.HAS_ALARM, 1); // 0 for false, 1 for true
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName()); //get the Timezone
+        values.put(CalendarContract.Events.TITLE, description);
+        values.put(CalendarContract.Events.EVENT_LOCATION, place);
+        long startTime = beginDate.getTimeInMillis();
+        values.put(CalendarContract.Events.DTSTART, startTime);
+        long endTime = endDate.getTimeInMillis();
+        values.put(CalendarContract.Events.DTEND, endTime);
+        values.put(CalendarContract.Events.HAS_ALARM, 1);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
         Uri uri = mContentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
-        Log.i(LOG_TAG,"calendar entry inserted");
-        */
-        Intent calendarIntent = new Intent(Intent.ACTION_INSERT);
-        calendarIntent.setData(CalendarContract.Events.CONTENT_URI);
-        calendarIntent.putExtra(CalendarContract.Events.TITLE, description);
-        calendarIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, place);
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.MONTH, 0);
-        cal.set(Calendar.YEAR, 2013);
-        cal.set(Calendar.HOUR_OF_DAY, 20);
-        cal.set(Calendar.MINUTE, 0);
-        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTime().getTime());
-        cal.set(Calendar.HOUR_OF_DAY, 20);
-        cal.set(Calendar.MINUTE, 30);
-        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.getTime().getTime());
-        AddTask.this.startActivity(calendarIntent);
+        Log.i(LOG_TAG,"Kalendereintrag erstellt");
+    }
 
+    private long getDuration(Date begin, Date end, TimeUnit timeUnit){
+
+        long diff = end.getTime() -begin.getTime();
+        return timeUnit.convert(diff, TimeUnit.MILLISECONDS);
     }
 }

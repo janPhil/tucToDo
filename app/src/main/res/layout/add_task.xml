@@ -5,54 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/layout_add_task">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/new_task"
-        android:id="@+id/addTaskTextView"
-        android:layout_marginTop="48dp"
-        android:layout_below="@+id/add_task_titel"
-        android:layout_toLeftOf="@+id/add_task_titel"
-        android:layout_toStartOf="@+id/add_task_titel" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_task"
-        android:id="@+id/addTaskButton"
-        android:layout_gravity="right"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp" />
-
-    <EditText
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/addTaskEditText"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_alignBottom="@+id/addTaskTextView"
-        android:layout_alignLeft="@+id/task_date_button"
-        android:layout_alignStart="@+id/task_date_button" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/task_date"
-        android:id="@+id/textView"
-        android:layout_alignBaseline="@+id/task_date_button"
-        android:layout_alignBottom="@+id/task_date_button"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/task_date_format"
-        android:id="@+id/task_date_button"
-        android:layout_marginTop="21dp"
-        android:layout_below="@+id/addTaskEditText"
-        android:layout_alignLeft="@+id/addTaskButton"
-        android:layout_alignStart="@+id/addTaskButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,110 +14,204 @@
         android:text="@string/add_task_titel"
         android:id="@+id/add_task_titel"
         android:textColor="#83a9ff"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/place_label"
-        android:id="@+id/textView2"
-        android:layout_marginBottom="24dp"
-        android:layout_above="@+id/work_button"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/place_editText"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignLeft="@+id/task_date_button"
-        android:layout_alignStart="@+id/task_date_button"
-        android:layout_alignRight="@+id/addTaskEditText"
-        android:layout_alignEnd="@+id/addTaskEditText" />
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/type_label"
-        android:id="@+id/textView3"
-        android:layout_marginBottom="54dp"
-        android:layout_above="@+id/addTaskButton"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type_label"
+            android:id="@+id/textView3"
+            android:layout_above="@+id/addTaskButton"
+            android:layout_marginLeft="20dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/work"
-        android:textSize="10dp"
-        android:id="@+id/work_button"
-        android:background="#ff8080"
-        android:layout_alignTop="@+id/free_button"
-        android:layout_alignLeft="@+id/place_editText"
-        android:layout_alignStart="@+id/place_editText" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/work"
+            android:textSize="10dp"
+            android:id="@+id/work_button"
+            android:background="#ff8080"
+            android:layout_marginLeft="45dp" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/free"
+            android:textSize="10dp"
+            android:id="@+id/free_button"
+            android:background="#b4eeb4"
+            android:layout_marginLeft="20dp" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_else"
+            android:textSize="10dp"
+            android:id="@+id/else_button"
+            android:background="#315a97"
+            android:layout_marginLeft="20dp" />
+    </LinearLayout>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/free"
-        android:textSize="10dp"
-        android:id="@+id/free_button"
-        android:background="#b4eeb4"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignRight="@+id/task_date_button"
-        android:layout_alignEnd="@+id/task_date_button" />
+        android:id="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="22dp">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_else"
-        android:textSize="10dp"
-        android:id="@+id/else_button"
-        android:background="#315a97"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/add_task_titel"
-        android:layout_toEndOf="@+id/add_task_titel" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_date"
+            android:id="@+id/textView"
+            android:layout_marginBottom="51dp"
+            android:layout_marginLeft="20dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to Cal"
-        android:id="@+id/addToCal"
-        android:layout_alignTop="@+id/addTaskButton"
-        android:layout_toRightOf="@+id/free_button"
-        android:layout_toEndOf="@+id/free_button" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="begin"
+            android:id="@+id/beginDate"
+            android:layout_marginLeft="35dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="end"
+            android:id="@+id/endDate"
+            android:layout_marginLeft="35dp" />
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/time"
-        android:id="@+id/textView4"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/addTaskTextView"
-        android:layout_alignStart="@+id/addTaskTextView" />
+        android:id="@+id/linearLayout3"
+        android:weightSum="1"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:id="@+id/startTimeButton"
-        android:layout_above="@+id/place_editText"
-        android:layout_alignLeft="@+id/place_editText"
-        android:layout_alignStart="@+id/place_editText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:id="@+id/textView4"
+            android:layout_marginLeft="20dp" />
 
-    <Button
-        android:layout_width="wrap_content"
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start"
+            android:id="@+id/startTimeButton"
+            android:layout_marginLeft="35dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end"
+            android:id="@+id/endTimeButton"
+            android:layout_marginLeft="35dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/end"
-        android:id="@+id/endTimeButton"
-        android:layout_alignBottom="@+id/startTimeButton"
-        android:layout_alignRight="@+id/place_editText"
-        android:layout_alignEnd="@+id/place_editText" />
+        android:weightSum="1"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:id="@+id/linearLayout4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_label"
+            android:id="@+id/textView2"
+            android:layout_marginBottom="26dp"
+            android:layout_marginLeft="20dp" />
+
+        <EditText
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/place_editText"
+            android:layout_marginLeft="40dp"
+            android:layout_weight="0.30" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_below="@+id/add_task_titel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/linearLayout5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_task"
+            android:id="@+id/addTaskTextView"
+            android:layout_marginLeft="20dp" />
+
+        <EditText
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/addTaskEditText"
+            android:layout_weight="0.35"
+            android:layout_marginLeft="20dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:id="@+id/linearLayout6"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to Cal"
+            android:id="@+id/addToCal"
+            android:layout_marginLeft="70dp"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_task"
+            android:id="@+id/addTaskButton"
+            android:layout_marginLeft="35dp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

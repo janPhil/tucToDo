@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.whoami.tuctodo.db.TaskContract;
@@ -56,6 +55,10 @@ public class ToDoFragment extends Fragment {
         if (id == R.id.action_settings){
             startActivity(new Intent(getActivity(),SettingsActivity.class));
         }
+
+        if (id == R.id.action_work_report)
+            startActivity(new Intent(getActivity(),WorkReport.class));
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -65,7 +68,7 @@ public class ToDoFragment extends Fragment {
         dbHelper = new TaskDBHelper(getActivity());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.query(TaskContract.TABLE, new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC, TaskContract.Columns.TYPEOFTASK,
-                        TaskContract.Columns.DATE},
+                        TaskContract.Columns.BEGINDATE},
                 null, null, null, null, null);
 
         mCustomAdapter = new CustomAdapter(getActivity(),
@@ -80,9 +83,9 @@ public class ToDoFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                deleteToDo(view);
+                deleteToDo(id);
                 Toast.makeText(getActivity(), "To-Do wurde gelöscht", Toast.LENGTH_SHORT).show();
-                Log.d(LOG_TAG, "looong");
+                Log.d(LOG_TAG, "looong ID: " + id + " position: " + position);
                 return false;
             }
         });
@@ -112,25 +115,21 @@ public class ToDoFragment extends Fragment {
         Log.d(LOG_TAG, "onResume");
         SQLiteDatabase sql = dbHelper.getReadableDatabase();
         Cursor newCursor = sql.query(TaskContract.TABLE,
-                new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC,TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.DATE},
+                new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC,TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.BEGINDATE},
                 null, null, null, null, null);
         mCustomAdapter.swapCursor(newCursor);
         mCustomAdapter.notifyDataSetChanged();
     }
 
-    public void deleteToDo(View view) {
-        View v = (View) view.getParent();
-        TextView taskTextView = (TextView) v.findViewById(R.id.taskTextView);
-        String task = taskTextView.getText().toString();
-        Log.d(LOG_TAG, "taskTextView: " + task);
+    public void deleteToDo(long id) {
         String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
                 TaskContract.TABLE,
-                TaskContract.Columns.DESC,
-                task);
+                TaskContract.Columns._ID,
+                id);
         dbHelper = new TaskDBHelper(getActivity());
         SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
         sqlDB.execSQL(sql);
-        Log.d(LOG_TAG, "onDoneButtonCLick");
+        Log.d(LOG_TAG, "deleteToDo: "+ id);
         sqlDB.close();
         updateUI();
     }
@@ -139,7 +138,7 @@ public class ToDoFragment extends Fragment {
         Log.d(LOG_TAG, "updateUI");
         SQLiteDatabase sql = dbHelper.getReadableDatabase();
         Cursor newCursor = sql.query(TaskContract.TABLE,
-                new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC,TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.DATE},
+                new String[]{TaskContract.Columns._ID, TaskContract.Columns.DESC,TaskContract.Columns.TYPEOFTASK, TaskContract.Columns.BEGINDATE},
                 null, null, null, null, null);
         mCustomAdapter.swapCursor(newCursor);
         mCustomAdapter.notifyDataSetChanged();
