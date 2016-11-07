@@ -16,15 +16,15 @@ public class TaskDBHelper extends SQLiteOpenHelper {
 		@Override
 		public void onCreate(SQLiteDatabase sqlDB) {
 			String sqlQuery =
-					String.format("CREATE TABLE %s (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + "%s TEXT, " + "%s TEXT, " + "%s TEXT, " + "%s TEXT, " + "%s TEXT)",
+					String.format("CREATE TABLE %s (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, " + "%s TEXT, " + "%s TEXT, " + "%s TEXT, " + "%s TEXT, " + "%s TEXT," + "%s TEXT)",
 							com.example.whoami.tuctodo.db.TaskContract.TABLE,
 							com.example.whoami.tuctodo.db.TaskContract.Columns.DESC,
 							com.example.whoami.tuctodo.db.TaskContract.Columns.PLACE,
 							com.example.whoami.tuctodo.db.TaskContract.Columns.TYPEOFTASK,
 							com.example.whoami.tuctodo.db.TaskContract.Columns.BEGINDATE,
-							com.example.whoami.tuctodo.db.TaskContract.Columns.ENDDATE);
+							com.example.whoami.tuctodo.db.TaskContract.Columns.ENDDATE,
+							com.example.whoami.tuctodo.db.TaskContract.Columns.MONTH);
 			Log.d(LOG_TAG, "sql: " + sqlQuery);
-
 			sqlDB.execSQL(sqlQuery);
 		}
 

@@ -1,187 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/tucToDo"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_add_task">
-
-
+    android:id="@+id/linearLayoutBackround">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/add_task_titel"
         android:id="@+id/add_task_titel"
         android:textColor="#83a9ff"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_marginTop="30dp" />
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
-        android:layout_below="@+id/linearLayout4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp">
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/linearLayout0">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:text="Titel:"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/type_label"
-            android:id="@+id/textView3"
-            android:layout_above="@+id/addTaskButton"
+            android:id="@+id/textView1"
+            android:layout_weight="0.70"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/TaskTitel"
+            android:layout_weight="0.30"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:layout_marginTop="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/linearLayout1">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_date_range_black_24dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp" />
+
+        <Button
+            android:text="Begin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/startDateButton"
+            android:layout_weight="4"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/darker_gray" />
+
+        <Button
+            android:text="End"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/endDateButton"
+            android:layout_weight="4"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/linearLayout2">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_watch_later_black_24dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp" />
+
+        <Button
+            android:text="Start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button9"
+            android:layout_weight="4"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/darker_gray" />
+
+        <Button
+            android:text="Stop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_weight="4"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:text="Place:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_weight="0.70"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/PlaceTitel"
+            android:layout_weight="0.30"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/linearLayout3">
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/work"
-            android:textSize="10dp"
             android:id="@+id/work_button"
             android:background="#ff8080"
-            android:layout_marginLeft="45dp" />
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:text="Work"
+            android:textColor="@android:color/background_dark" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/free"
-            android:textSize="10dp"
             android:id="@+id/free_button"
             android:background="#b4eeb4"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+            android:textColorLink="@android:color/darker_gray"
+            android:text="Leisure" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_else"
-            android:textSize="10dp"
             android:id="@+id/else_button"
-            android:background="#315a97"
-            android:layout_marginLeft="20dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
-        android:layout_below="@+id/linearLayout5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="22dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/task_date"
-            android:id="@+id/textView"
-            android:layout_marginBottom="51dp"
-            android:layout_marginLeft="20dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="begin"
-            android:id="@+id/beginDate"
-            android:layout_marginLeft="35dp" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="end"
-            android:id="@+id/endDate"
-            android:layout_marginLeft="35dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout3"
-        android:weightSum="1"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time"
-            android:id="@+id/textView4"
-            android:layout_marginLeft="20dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start"
-            android:id="@+id/startTimeButton"
-            android:layout_marginLeft="35dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/end"
-            android:id="@+id/endTimeButton"
-            android:layout_marginLeft="35dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp"
-        android:id="@+id/linearLayout4">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/place_label"
-            android:id="@+id/textView2"
-            android:layout_marginBottom="26dp"
-            android:layout_marginLeft="20dp" />
-
-        <EditText
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/place_editText"
-            android:layout_marginLeft="40dp"
-            android:layout_weight="0.30" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:layout_below="@+id/add_task_titel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/linearLayout5">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_task"
-            android:id="@+id/addTaskTextView"
-            android:layout_marginLeft="20dp" />
-
-        <EditText
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/addTaskEditText"
-            android:layout_weight="0.35"
-            android:layout_marginLeft="20dp" />
+            android:background="@android:color/holo_blue_light"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@android:color/background_light" />
 
 
     </LinearLayout>
@@ -189,29 +186,30 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:id="@+id/linearLayout6"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp">
+        android:id="@+id/linearLayout4"
+        android:layout_height="80dp">
+
 
         <Button
-            android:layout_width="wrap_content"
+            android:text="Add to Calander"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add to Cal"
-            android:id="@+id/addToCal"
-            android:layout_marginLeft="70dp"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/addCalButton"
+            android:layout_weight="4"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:text="Add to List"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_task"
-            android:id="@+id/addTaskButton"
-            android:layout_marginLeft="35dp" />
+            android:id="@+id/addListButton"
+            android:layout_weight="4"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
     </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>
