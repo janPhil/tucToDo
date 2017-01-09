@@ -368,7 +368,7 @@ public class WorkReport extends AppCompatActivity {
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             d += getDuration(StringToDate(cursor.getString(0)), StringToDate(cursor.getString(1)), TimeUnit.MINUTES);
             String[] data = {cursor.getString(0), cursor.getString(1), Long.toString(getDuration(StringToDate(cursor.getString(0)), StringToDate(cursor.getString(1)), TimeUnit.MINUTES))};
-            csvWriter.write(data[0] + " - " + data[1] + " = " + data[2] + "\r\n");
+            csvWriter.write(data[0] + "," + data[1] + "," + data[2] + "\r\n");
             Log.d(LOG_TAG, "writing data to .csv");
         }
         csvWriter.close();
